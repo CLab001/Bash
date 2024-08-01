@@ -4,13 +4,13 @@ release_file=/etc/os-release
 logfile=/var/log/updater.log
 errorlog=/var/log/update_error.log
 
-# Function to log and display messages
+# Log and display messages
 log_and_display() {
     local message=$1
     echo "$message" | tee -a $logfile
 }
 
-# Function to log errors
+# Error Log
 log_error() {
     local message=$1
     echo "$message" | tee -a $errorlog >&2
@@ -19,7 +19,7 @@ log_error() {
 if grep -q "arch" $release_file; then 
     log_and_display "Starting update for Arch Linux..."
     
-    # Arch Linux update
+    # Arch Linux 
     if sudo pacman -Syu 2>&1 | tee -a $logfile | tee -a $errorlog >&2; then
         log_and_display "Arch Linux update completed successfully."
     else
@@ -28,7 +28,7 @@ if grep -q "arch" $release_file; then
 elif grep -q "Fedora" $release_file; then
     log_and_display "Starting update for Fedora..."
     
-    # Fedora update
+    # Fedora
     if sudo dnf update -y 2>&1 | tee -a $logfile | tee -a $errorlog >&2; then
         log_and_display "Fedora update completed successfully."
     else
